@@ -1,6 +1,6 @@
 import {AbstractLevelDOWN, AbstractIterator, AbstractChainedBatch} from "abstract-leveldown"
 
-class LevelDOWN extends AbstractLevelDOWN {
+export class LevelDOWN extends AbstractLevelDOWN {
   constructor(source) {
     this._source = source
   }
@@ -97,5 +97,3 @@ export class ChainedBatch extends AbstractChainedBatch {
     this._stream.end(cb)
   }
 }
-
-export default {LevelDOWN, Iterator, ChainedBatch}
