@@ -1,0 +1,15 @@
+{
+  "name": "abstract-stream-leveldown",
+  "version": "1.0.0",
+  "description": "A stream-based abstract prototype matching the LevelDOWN API",
+  "author": "Jed Schmidt (http://jed.is)",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel abstract-stream-leveldown.js > index.js",
+    "test": "babel-node test.js",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "abstract-leveldown": "^2.1.0"
+  }
+}
