@@ -1,8 +1,8 @@
 import {AbstractLevelDOWN, AbstractIterator, AbstractChainedBatch} from "abstract-leveldown"
 
 export class LevelDOWN extends AbstractLevelDOWN {
-  constructor(source) {
-    this._source = source
+  constructor(...args) {
+    super(...args)
   }
 
   _get(key, options, cb) {
@@ -45,13 +45,13 @@ export class LevelDOWN extends AbstractLevelDOWN {
   }
 
   _iterator(options) {
-    let rs = this._source.createReadStream(options)
+    let rs = this._createReadStream(options)
 
     return new Iterator(rs)
   }
 
   _chainedBatch() {
-    let ws = this._source.createWriteStream()
+    let ws = this._createWriteStream()
 
     return new ChainedBatch(ws)
   }
@@ -61,14 +61,18 @@ export class Iterator extends AbstractIterator {
   constructor(stream) {
     this._stream = stream
     this._hasEnded = false
+    this._error = null
 
     this._stream.on("end", () => this._hasEnded = true)
+    this._stream.on("error", error => this._error = error)
   }
 
   _next(cb) {
+    if (this._error) return cb(this._error)
+
     let kv = this._stream.read()
 
-    if (kv !== null) return cb(null, kv)
+    if (kv !== null) return cb(null, kv.key, kv.value)
 
     if (this._hasEnded) return cb()
 
@@ -79,6 +83,9 @@ export class Iterator extends AbstractIterator {
 export class ChainedBatch extends AbstractChainedBatch {
   constructor(stream) {
     this._stream = stream
+    this._error = null
+
+    this._stream.on("error", error => this._error = error)
   }
 
   _put(key, value, options) {
@@ -94,6 +101,6 @@ export class ChainedBatch extends AbstractChainedBatch {
   }
 
   _write(cb) {
-    this._stream.end(cb)
+    this._stream.end(() => cb(this._error))
   }
 }

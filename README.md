@@ -12,8 +12,8 @@ Example
 import {AbstractStreamLevelDOWN} from "abstract-stream-leveldown"
 
 class MyLevelDOWN extends AbstractStreamLevelDOWN {
-  _createReadStream(options) { /* return a Readable */ }
-  _createWriteStream(options) { /* return a Writable */ }
+  _createReadStream([options]) { /* return a Readable */ }
+  _createWriteStream([options]) { /* return a Writable */ }
 }
 ```
 
@@ -24,9 +24,9 @@ API
 
 Returns a [Readable][] stream. `options` should support the same properties as those to be passed to [createReadStream][].
 
-### AbstractStreamLevelDOWN#_createWrite(options)
+### AbstractStreamLevelDOWN#_createWriteStream([options])
 
-Returns a [Writable][] stream. `options` should support the same properties as those to be passed to [put][].
+Returns a [Writable][] stream. `options` should support the same properties as those to be passed to [put][]. This stream accepts `{key, value}` objects, and will perform a `del` if the value is null or undefined, and a `put` otherwise.
 
 [AbstractLevelDOWN]: https://github.com/rvagg/abstract-leveldown
 [LevelDOWN]: https://github.com/rvagg/node-leveldown
