@@ -11,5 +11,12 @@
   },
   "dependencies": {
     "abstract-leveldown": "^2.1.0"
-  }
+  },
+  "keywords": [
+    "level",
+    "levelup",
+    "leveldown",
+    "stream",
+    "streams"
+  ]
 }
