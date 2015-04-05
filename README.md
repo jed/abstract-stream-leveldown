@@ -1,9 +1,7 @@
 abstract-stream-leveldown
 =========================
 
-STATUS: THOUGHT EXPERIMENT
-
-This library provides a smaller API footprint for using [AbstractLevelDOWN][] to create a [LevelDOWN][] backend, by implementing a [Readable][] and [Writable][] stream instead of all of the [abstract LevelDOWN methods][].
+This library provides a smaller API footprint for using [AbstractLevelDOWN][] to create a [LevelDOWN][] backend, by implementing a [Readable][] and [Writable][] stream instead of all of the [abstract LevelDOWN methods][]. It's a good fit for turning something that already has readable and writable stream interfaces.
 
 Example
 -------
