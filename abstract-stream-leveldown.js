@@ -68,13 +68,13 @@ export class Iterator extends AbstractIterator {
   }
 
   _next(cb) {
-    if (this._error) return cb(this._error)
+    if (this._error) return setImmediate(cb, this._error)
 
     let kv = this._stream.read()
 
-    if (kv !== null) return cb(null, kv.key, kv.value)
+    if (kv !== null) return setImmediate(cb, null, kv.key, kv.value)
 
-    if (this._hasEnded) return cb()
+    if (this._hasEnded) return setImmediate(cb)
 
     this._stream.once("readable", () => this._next(cb))
   }
