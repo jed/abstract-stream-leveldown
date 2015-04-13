@@ -63,20 +63,32 @@ export class Iterator extends AbstractIterator {
     this._hasEnded = false
     this._error = null
 
-    this._stream.on("end", () => this._hasEnded = true)
-    this._stream.on("error", error => this._error = error)
+    this._stream.on("end", () => {
+      this._hasEnded = true
+      this._check()
+    })
+
+    this._stream.on("error", error => {
+      this._error = error
+      this._check()
+    })
   }
 
   _next(cb) {
-    if (this._error) return setImmediate(cb, this._error)
+    this._cb = cb
+    this._check()
+  }
+
+  _check() {
+    if (this._error) return setImmediate(this._cb, this._error)
 
     let kv = this._stream.read()
 
-    if (kv !== null) return setImmediate(cb, null, kv.key, kv.value)
+    if (kv !== null) return setImmediate(this._cb, null, kv.key, kv.value)
 
-    if (this._hasEnded) return setImmediate(cb)
+    if (this._hasEnded) return setImmediate(this._cb)
 
-    this._stream.once("readable", () => this._next(cb))
+    this._stream.once("readable", () => this._check())
   }
 }
 
