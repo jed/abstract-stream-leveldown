@@ -6,10 +6,29 @@ This library provides a smaller API footprint for using [AbstractLevelDOWN][] to
 Example
 -------
 
+in es6
+
 ```javascript
 import {AbstractStreamLevelDOWN} from "abstract-stream-leveldown"
 
 class MyLevelDOWN extends AbstractStreamLevelDOWN {
+   _createReadStream([options]) { /* return a Readable */ }
+   _createWriteStream([options]) { /* return a Writable */ }
+}
+```
+
+in es5
+
+```javascript
+var inherits = require('inherits')
+var assign = require('object-assign')
+var AbstractStreamLevelDOWN = require('abstract-stream-leveldown').AbstractStreamLevelDOWN
+
+function MyLevelDOWN (location) {
+  AbstractLevelDOWN.call(this, location)
+}
+inherits(MyLevelDOWN, AbstractStreamLevelDOWN)
+assign(AbstractStreamLevelDOWN, {
   _createReadStream([options]) { /* return a Readable */ }
   _createWriteStream([options]) { /* return a Writable */ }
 }
