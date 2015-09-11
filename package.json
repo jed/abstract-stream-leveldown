@@ -1,6 +1,6 @@
 {
   "name": "abstract-stream-leveldown",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "./lib",
   "description": "A stream-based abstract prototype matching the LevelDOWN API",
   "author": "Jed Schmidt (http://jed.is)",
