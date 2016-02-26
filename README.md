@@ -28,7 +28,7 @@ function MyLevelDOWN (location) {
   AbstractLevelDOWN.call(this, location)
 }
 inherits(MyLevelDOWN, AbstractStreamLevelDOWN)
-assign(AbstractStreamLevelDOWN, {
+assign(MyLevelDOWN.prototype, {
   _createReadStream([options]) { /* return a Readable */ }
   _createWriteStream([options]) { /* return a Writable */ }
 }
